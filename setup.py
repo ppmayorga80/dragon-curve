@@ -23,6 +23,7 @@ setup(
     entry_points={
         'console_scripts': [
             'dragon-curve = dragon_curve:main',
+            'dragon-curve2 = rdragon_curve:main',
         ]
     }
 )
