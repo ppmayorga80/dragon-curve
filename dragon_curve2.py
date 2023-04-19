@@ -1,4 +1,5 @@
 """Rounded Dragon Curve"""
+import colorsys
 
 from typing import List, Tuple, Sequence
 import cairo
@@ -81,24 +82,29 @@ def rotation_operation(points: List[Point], k: int = 0) -> List[Point]:
     return new_points
 
 
-def points_to_svg(output_filename: str, points: List[Point],
+def points_to_svg(output_filename: str,
+                  points: List[Point],
+                  colors: List[Tuple[float, float, float]],
                   width: int, height: int, line_width: float,
                   line_color: Sequence[float]):
     with cairo.SVGSurface(output_filename, width, height) as surf:
         # set initial parameters
         context = cairo.Context(surf)
-        context.set_line_width(line_width)
-        context.set_source_rgba(line_color[0], line_color[1], line_color[2],
-                                line_color[3] if len(line_color) == 4 else 1.0)
 
         # 2. draw points
         p = points[0]
+        print(p)
         context.move_to(p.x, p.y)
-        for pk in tqdm(points[1:], total=len(points) - 1, desc="Drawing dragon svg"):
+        for pk, ck in tqdm(zip(points[1:], colors), total=len(points) - 1, desc="Drawing dragon svg"):
+            print(pk, ck)
+            # context.set_source_rgba(1, 0, 0, 1.0)
+            context.set_line_width(line_width)
+            context.set_source_rgba(ck[0], ck[1], ck[2], 1.0)
+            context.set_line_cap(cairo.LINE_CAP_ROUND)
             context.line_to(pk.x, pk.y)
-
-        # stroke out the color and width property
-        context.stroke()
+            context.stroke()
+            context.move_to(pk.x, pk.y)
+            #context.restore()
 
 
 def dragon_curve2(output: str, iterations: int, line_color: Tuple, line_width: float):
@@ -107,15 +113,17 @@ def dragon_curve2(output: str, iterations: int, line_color: Tuple, line_width: f
     for _ in range(iterations):
         points = rotation_operation(points, k=1)
 
+    n_points = len(points)
+    colors = [colorsys.hsv_to_rgb(v / n_points, 1.0, 1.0) for v in range(n_points - 1)]
     a, b = bounded_rectangle(points)
     v = b - a
-    w, h = v.x + 2 * line_width, v.y + 2 * line_width
+    w, h = v.x + int(2 * line_width), v.y + int(2 * line_width)
     points = [p - a for p in points]
-    points_to_svg(output, points, w, h, line_width=line_width, line_color=line_color)
+    points_to_svg(output, points, colors, w, h, line_width=line_width, line_color=line_color)
 
 
 if __name__ == '__main__':
     dragon_curve2("dragon.svg",
-                  iterations=4,
+                  iterations=5,
                   line_color=(1, 0, 1, 1),
                   line_width=1.0)
