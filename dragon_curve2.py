@@ -109,7 +109,7 @@ def dragon_curve2(output: str, iterations: int, line_color: Tuple, line_width: f
 
     a, b = bounded_rectangle(points)
     v = b - a
-    w, h = v.x + 2 * line_width, v.y + 2 * line_width
+    w, h = v.x + round(2 * line_width), v.y + round(2 * line_width)
     points = [p - a for p in points]
     points_to_svg(output, points, w, h, line_width=line_width, line_color=line_color)
 
