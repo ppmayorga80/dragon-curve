@@ -84,9 +84,30 @@ def rotation_operation(points: List[Point], k: int = 0) -> List[Point]:
 
 def points_to_svg(output_filename: str,
                   points: List[Point],
-                  colors: List[Tuple[float, float, float]],
                   width: int, height: int, line_width: float,
                   line_color: Sequence[float]):
+    with cairo.SVGSurface(output_filename, width, height) as surf:
+        # set initial parameters
+        context = cairo.Context(surf)
+        context.set_line_cap(cairo.LINE_CAP_ROUND)
+        context.set_line_join(cairo.LINE_JOIN_ROUND)
+        context.set_line_width(line_width)
+        context.set_source_rgba(line_color[0], line_color[1], line_color[2], 1.0)
+
+        # 2. draw points
+        p = points[0]
+        context.move_to(p.x, p.y)
+        for pk in tqdm(points[1:], total=len(points) - 1, desc="Drawing dragon svg"):
+            # context.set_source_rgba(1, 0, 0, 1.0)
+            context.line_to(pk.x, pk.y)
+
+        context.stroke()
+
+
+def points_to_svg_gradient(output_filename: str,
+                           points: List[Point],
+                           colors: List[Tuple[float, float, float]],
+                           width: int, height: int, line_width: float):
     with cairo.SVGSurface(output_filename, width, height) as surf:
         # set initial parameters
         context = cairo.Context(surf)
@@ -96,18 +117,30 @@ def points_to_svg(output_filename: str,
         print(p)
         context.move_to(p.x, p.y)
         for pk, ck in tqdm(zip(points[1:], colors), total=len(points) - 1, desc="Drawing dragon svg"):
-            print(pk, ck)
             # context.set_source_rgba(1, 0, 0, 1.0)
             context.set_line_width(line_width)
             context.set_source_rgba(ck[0], ck[1], ck[2], 1.0)
             context.set_line_cap(cairo.LINE_CAP_ROUND)
+            context.set_line_join(cairo.LINE_JOIN_ROUND)
             context.line_to(pk.x, pk.y)
             context.stroke()
             context.move_to(pk.x, pk.y)
-            #context.restore()
 
 
 def dragon_curve2(output: str, iterations: int, line_color: Tuple, line_width: float):
+    points = [Point(0, 0), Point(0, -4)]
+
+    for _ in range(iterations):
+        points = rotation_operation(points, k=1)
+
+    a, b = bounded_rectangle(points)
+    v = b - a
+    w, h = v.x + int(2 * line_width), v.y + int(2 * line_width)
+    points = [p - a for p in points]
+    points_to_svg(output, points, w, h, line_width=line_width, line_color=line_color)
+
+
+def dragon_curve2_gradient(output: str, iterations: int, line_width: float):
     points = [Point(0, 0), Point(0, -4)]
 
     for _ in range(iterations):
@@ -119,11 +152,14 @@ def dragon_curve2(output: str, iterations: int, line_color: Tuple, line_width: f
     v = b - a
     w, h = v.x + int(2 * line_width), v.y + int(2 * line_width)
     points = [p - a for p in points]
-    points_to_svg(output, points, colors, w, h, line_width=line_width, line_color=line_color)
+    points_to_svg_gradient(output, points, colors, w, h, line_width=line_width)
 
 
 if __name__ == '__main__':
-    dragon_curve2("dragon.svg",
-                  iterations=5,
-                  line_color=(1, 0, 1, 1),
-                  line_width=1.0)
+    gradient = True
+    if gradient:
+        dragon_curve2_gradient("dragon.svg", iterations=5, line_width=1.0)
+    else:
+        dragon_curve2("dragon.svg",
+                      iterations=5,
+                      line_width=1.0, line_color=(1, 0, 0))
