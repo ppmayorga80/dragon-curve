@@ -22,8 +22,7 @@ setup(
     extras_require=extras_require,
     entry_points={
         'console_scripts': [
-            'dragon-curve = dragon_curve:main',
-            'dragon-curve2 = rdragon_curve:main',
+            'dragon = dragon:main',
         ]
     }
 )

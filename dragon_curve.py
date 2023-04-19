@@ -1,20 +1,7 @@
-"""
-Dragon curve.
+"""Dragon curve"""
+from typing import Tuple
 
-Usage:
-  dragon_curve [--line-width=WIDTH] [--line-color=COLOR] [--line-length=LENGTH] [--iterations=N] [--output=OUTPUT]
-  dragon_curve --version
-
-Options:
-  -w WIDTH,--line-width=WIDTH       Pen Line Width [default: 5.0]
-  -c COLOR,--line-color=COLOR       Pen Line Color RGBA (float) [default: 1,0,1,1]
-  -l LENGTH,--line-length=LENGTH    Step length [default: 10]
-  -n N,--iterations=N               Set the number of iterations [default: 4]
-  -o OUTPUT,--output=OUTPUT         Output file in svg format [default: dragon.svg]
-  -v,--version                      shows version
-"""
 import cairo
-from docopt import docopt
 from tqdm import tqdm
 
 
@@ -66,7 +53,7 @@ def points_to_svg(output: str,
                   width: float,
                   height: float,
                   line_width: float,
-                  line_color: tuple):
+                  line_color: Tuple):
     """save points to a svg file
 
     :param output: the output file
@@ -156,20 +143,17 @@ def dragon_points(n: int, line_length: float) -> list:
     return points
 
 
-def main():
+def dragon_curve(output: str, iterations: int, line_length: float, line_color: Tuple, line_width: float):
     """Main function"""
-    # 1. read the parameters
-    args = docopt(__doc__, version='Dragon Curve 1.0.0')
-    line_width = float(args["--line-width"])
-    line_length = float(args["--line-length"])
-    line_color = tuple(float(x) for x in args["--line-color"].split(","))
-    iterations = int(args["--iterations"])
-    output = args["--output"]
 
     points = dragon_points(n=iterations, line_length=line_length)
     points, width, height = min_rectangle(points)
-    points_to_svg(output, points, width, height, line_width, line_color)
+    points_to_svg(output, points, width + 2 * line_width, height + 2 * line_width, line_width, line_color)
 
 
 if __name__ == '__main__':
-    main()
+    dragon_curve("dragon.svg",
+                 iterations=4,
+                 line_length=10.0,
+                 line_color=(1, 0, 1, 1),
+                 line_width=1.0)

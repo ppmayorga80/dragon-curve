@@ -1,25 +1,7 @@
-"""Rounded Dragon Curve
-
-For version 2.0.0
-line length is equal to 4.0 in order to make the rounded corners
-with integers intervals of length 4 *--*
-
-Usage:
-  rdragon_curve [--line-width=WIDTH] [--line-color=COLOR] [--iterations=N] [--output=OUTPUT]
-  rdragon_curve --version
-
-Options:
-  -w WIDTH,--line-width=WIDTH       Pen Line Width [default: 1.0]
-  -c COLOR,--line-color=COLOR       Pen Line Color RGBA (float) [default: 1,0,1,1]
-  -n N,--iterations=N               Set the number of iterations [default: 4]
-  -o OUTPUT,--output=OUTPUT         Output file in svg format [default: dragon.svg]
-  -v,--version                      shows version
-"""
+"""Rounded Dragon Curve"""
 
 from typing import List, Tuple, Sequence
-
 import cairo
-from docopt import docopt
 from tqdm import tqdm
 
 
@@ -119,7 +101,7 @@ def points_to_svg(output_filename: str, points: List[Point],
         context.stroke()
 
 
-def dragon(output: str, iterations: int, line_color: Tuple, line_width: float):
+def dragon_curve2(output: str, iterations: int, line_color: Tuple, line_width: float):
     points = [Point(0, 0), Point(0, -4)]
 
     for _ in range(iterations):
@@ -132,18 +114,8 @@ def dragon(output: str, iterations: int, line_color: Tuple, line_width: float):
     points_to_svg(output, points, w, h, line_width=line_width, line_color=line_color)
 
 
-def main():
-    args = docopt(__doc__, version='Dragon Curve 2.0.0 Rounded')
-    line_color = tuple(float(x) for x in args["--line-color"].split(","))
-    line_width = float(args["--line-width"])
-    iterations = int(args["--iterations"])
-    output = args["--output"]
-
-    dragon(output=output,
-           iterations=iterations,
-           line_color=line_color,
-           line_width=line_width)
-
-
 if __name__ == '__main__':
-    main()
+    dragon_curve2("dragon.svg",
+                  iterations=4,
+                  line_color=(1, 0, 1, 1),
+                  line_width=1.0)
