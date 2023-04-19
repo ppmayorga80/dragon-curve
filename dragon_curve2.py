@@ -147,7 +147,7 @@ def dragon_curve2_gradient(output: str, iterations: int, line_width: float):
         points = rotation_operation(points, k=1)
 
     n_points = len(points)
-    colors = [colorsys.hsv_to_rgb(v / n_points, 1.0, 1.0) for v in range(n_points - 1)]
+    colors = [colorsys.hsv_to_rgb(h / n_points, 1.0, 1.0) for h in range(n_points - 1)]
     a, b = bounded_rectangle(points)
     v = b - a
     w, h = v.x + int(2 * line_width), v.y + int(2 * line_width)
@@ -157,9 +157,10 @@ def dragon_curve2_gradient(output: str, iterations: int, line_width: float):
 
 if __name__ == '__main__':
     gradient = True
+    iterations = 6
     if gradient:
-        dragon_curve2_gradient("dragon.svg", iterations=5, line_width=1.0)
+        dragon_curve2_gradient("dragon.svg", iterations=iterations, line_width=1.0)
     else:
         dragon_curve2("dragon.svg",
-                      iterations=5,
+                      iterations=iterations,
                       line_width=1.0, line_color=(1, 0, 0))
