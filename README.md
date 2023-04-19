@@ -21,7 +21,7 @@ Be sure you have installed:
 ### Option 1: Run from virtual environment
 
 * Activate environment ```source venv/bin/activate```
-* Run ```python dragon_curve.py --output dragon.svg```
+* Run ```python dragon.py --output dragon.svg```
 
 ### Option 2: Run from the system
 
@@ -29,4 +29,4 @@ Install step is performed just one time in order to install
 the command into the system, then, you only need to run the script
 
 * Install (1 time): ```python setup.py develop```
-* Run: ```dragon-curve --output dragon.svg```
+* Run: ```dragon --output dragon.svg```
