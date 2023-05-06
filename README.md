@@ -9,6 +9,7 @@ Be sure you have installed:
 
 * Python 3 ```brew install python3```
 * PkgConfig ```brew install pkg-config```
+* Cairo ```brew install cairo```
 
 ## Installation
 
