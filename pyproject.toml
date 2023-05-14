@@ -13,7 +13,6 @@ maintainers = [
     { name = "Pedro Mayorga, PhD", email = "ppmayorga80@gmail.com" }
 ]
 
-
 [project.scripts]
 dragon = "dragon_curve.dragon:main"
 
@@ -29,3 +28,4 @@ dragon = "dragon_curve.dragon:main"
 # https://pip.pypa.io/en/stable/reference/pip/#pep-517-and-518-support
 requires = ["setuptools>=43.0.0", "wheel"]
 build-backend = "setuptools.build_meta"
+

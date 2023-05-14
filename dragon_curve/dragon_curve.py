@@ -5,7 +5,9 @@ import cairo
 from tqdm import tqdm
 
 
-def min_rectangle(points: list[tuple[float, float]]) -> tuple[list[tuple[float, float]], float, float]:
+def min_rectangle(
+    points: list[tuple[float, float]]
+) -> tuple[list[tuple[float, float]], float, float]:
     """computes the minimum rectangle that enclose all points
     then, translate all points to this rectangle
 
@@ -18,11 +20,15 @@ def min_rectangle(points: list[tuple[float, float]]) -> tuple[list[tuple[float, 
     max_y = max([y for _, y in tqdm(points, total=len(points), desc="max(y)")])
     width = max_x - min_x
     height = max_y - min_y
-    points = [(x - min_x, y - min_y) for x, y in tqdm(points, total=len(points), desc="Updating points")]
+    points = [
+        (x - min_x, y - min_y)
+        for x, y in tqdm(points, total=len(points), desc="Updating points")
+    ]
     return points, width, height
 
 
-def rotate_points(points: list[tuple[int, int]], origin: tuple[int, int]) -> list[tuple[int, int]]:
+def rotate_points(points: list[tuple[int, int]],
+                  origin: tuple[int, int]) -> list[tuple[int, int]]:
     """rotate all points 90°
 
     :param points: the list of points to be rotated
@@ -33,27 +39,16 @@ def rotate_points(points: list[tuple[int, int]], origin: tuple[int, int]) -> lis
     """
     cos_pi_2 = 0
     sin_pi_2 = 1
-    r = [
-        [cos_pi_2, -sin_pi_2],
-        [sin_pi_2, cos_pi_2]
-    ]
+    r = [[cos_pi_2, -sin_pi_2], [sin_pi_2, cos_pi_2]]
     h, k = origin
-    rotated_points = [
-        (
-            r[0][0] * (x - h) + r[0][1] * (y - k) + h,
-            r[1][0] * (x - h) + r[1][1] * (y - k) + k
-        )
-        for x, y in points
-    ]
+    rotated_points = [(r[0][0] * (x - h) + r[0][1] * (y - k) + h,
+                       r[1][0] * (x - h) + r[1][1] * (y - k) + k)
+                      for x, y in points]
     return rotated_points
 
 
-def points_to_svg(output: str,
-                  points: list[tuple[float, float]],
-                  width: float,
-                  height: float,
-                  line_width: float,
-                  line_color: Tuple):
+def points_to_svg(output: str, points: list[tuple[float, float]], width: float,
+                  height: float, line_width: float, line_color: Tuple):
     """save points to a svg file
 
     :param output: the output file
@@ -74,7 +69,9 @@ def points_to_svg(output: str,
         # 2. draw points
         xo, yo = points[0]
         context.move_to(xo, yo)
-        for xk, yk in tqdm(points[1:], total=len(points) - 1, desc="Drawing dragon svg"):
+        for xk, yk in tqdm(points[1:],
+                           total=len(points) - 1,
+                           desc="Drawing dragon svg"):
             context.line_to(xk, yk)
 
         # stroke out the color and width property
@@ -122,8 +119,9 @@ def dragon_points(n: int, line_length: float) -> list:
     }
     sequence_str = dragon_sequence(n=n)
     rotations = [
-        rotation_fn[s]
-        for s in tqdm(sequence_str, total=len(sequence_str), desc="Compute dragon rotations")
+        rotation_fn[s] for s in tqdm(sequence_str,
+                                     total=len(sequence_str),
+                                     desc="Compute dragon rotations")
     ]
     # set initial values
     x, y = 0, 0
@@ -131,7 +129,9 @@ def dragon_points(n: int, line_length: float) -> list:
 
     points = [(x, y), (x + a, y + b)]
     x, y = x + a, y + b  # update position
-    for m in tqdm(rotations, total=len(rotations), desc="Computing dragon points"):
+    for m in tqdm(rotations,
+                  total=len(rotations),
+                  desc="Computing dragon points"):
         # 2.1 rotate
         a, b = m[0][0] * a + m[0][1] * b, m[1][0] * a + m[1][1] * b
         # 2.2 compute new points and append to the output
@@ -143,9 +143,11 @@ def dragon_points(n: int, line_length: float) -> list:
     return points
 
 
-def dragon_curve(output: str, iterations: int, line_length: float, line_color: Tuple, line_width: float):
+def dragon_curve(output: str, iterations: int, line_length: float,
+                 line_color: Tuple, line_width: float):
     """Main function"""
 
     points = dragon_points(n=iterations, line_length=line_length)
     points, width, height = min_rectangle(points)
-    points_to_svg(output, points, width + 2 * line_width, height + 2 * line_width, line_width, line_color)
+    points_to_svg(output, points, width + 2 * line_width,
+                  height + 2 * line_width, line_width, line_color)

@@ -1,1 +1,2 @@
-# Copyright (c) 2021-present Divinia, Inc.
+"""Set the project version"""
+__version__ = '1.0.0'

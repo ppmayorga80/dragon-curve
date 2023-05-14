@@ -1,0 +1,50 @@
+name: Build & Test - Staging
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+
+  style_check:
+    name: "Check Code Styles"
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+
+      - name: "Setup Python"
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+
+      - name: "Check Python Code Format and Style"
+        run: |
+          pip install -r <(cat requirements.txt | grep yapf)
+          bash scripts/yapf.sh
+          bash scripts/lint.sh
+          
+
+
+  unit_test:
+    name: "Build, Test and Code Analyzer"
+    needs:
+      - license_check
+      - style_check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+
+      - name: "Setup Python"
+        id: python_cache
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+
+      - name: "Run Unit Tests"
+        run: bash scripts/test.sh
+

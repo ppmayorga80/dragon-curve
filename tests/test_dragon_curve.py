@@ -27,7 +27,12 @@ def test_points_to_svg(tmp_path):
     svg_file = str(tmp_path) + ".svg"
 
     assert not os.path.exists(svg_file)
-    points_to_svg(output=svg_file, points=points, width=5, height=5, line_width=1, line_color=(1, 0, 0))
+    points_to_svg(output=svg_file,
+                  points=points,
+                  width=5,
+                  height=5,
+                  line_width=1,
+                  line_color=(1, 0, 0))
     assert os.path.exists(svg_file)
 
 
@@ -41,9 +46,11 @@ def test_dragon_sequence():
 def test_dragon_points():
     assert dragon_points(n=0, line_length=1) == [(0, 0), (0, 1)]
     assert dragon_points(n=1, line_length=1) == [(0, 0), (0, 1), (-1, 1)]
-    assert dragon_points(n=2, line_length=1) == [(0, 0), (0, 1), (-1, 1), (-1, 0), (-2, 0)]
-    assert dragon_points(n=3, line_length=1) == [(0, 0), (0, 1), (-1, 1), (-1, 0), (-2, 0), (-2, -1), (-1, -1),
-                                                 (-1, -2), (-2, -2)]
+    assert dragon_points(n=2, line_length=1) == [(0, 0), (0, 1), (-1, 1),
+                                                 (-1, 0), (-2, 0)]
+    assert dragon_points(n=3, line_length=1) == [(0, 0), (0, 1), (-1, 1),
+                                                 (-1, 0), (-2, 0), (-2, -1),
+                                                 (-1, -1), (-1, -2), (-2, -2)]
 
 
 def test_dragon_curve(tmp_path):

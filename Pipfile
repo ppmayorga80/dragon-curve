@@ -1,0 +1,17 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+[dev-packages]
+
+[requires]
+python_version = ">=3.10"
+
+[scripts]
+version = "python -c \"import dragon_curve;print(dragon_curve.__version__)\""
+install = "bash install.sh"
+yapf = "bash scripts/yapf.sh --apply"
+lint = "bash scripts/lint.sh"
+test = "bash scripts/test.sh"
