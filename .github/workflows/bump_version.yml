@@ -83,7 +83,7 @@ jobs:
       - name: "Set tag"
         if: env.BUMPED == 'TRUE'
         run: |
-          git config --local user.email "ppmayorga80@gmail.com"
+          git config --local user.email "action@github.com"
           git config --local user.name "github-actions"
           git commit -m 'CI Version bump to v${{ env.CURRENT_VERSION }}' -a
           git tag -a v${{ env.CURRENT_VERSION }}  -m "Version ${{ env.CURRENT_VERSION }}"
