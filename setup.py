@@ -9,7 +9,7 @@ setup(
     version='1.0.0',
     author="Pedro Mayorga, PhD",
     author_email="ppmayorga80@gmail.com",
-    description='Fractal logo',
+    description='Dragon curve',
     long_description=long_description,
     long_description_content_type='text/markdown',
     url="https://github.com/ppmayorga80/dragon-curve",
