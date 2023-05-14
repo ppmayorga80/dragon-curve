@@ -1,6 +1,6 @@
 [project]
 name = "dragon-curve"
-version = "1.0.1"
+current_version = "1.0.1"
 description = "A dragon curve algorithm in SVG"
 readme = "README.md"
 requires-python = ">=3.7"
