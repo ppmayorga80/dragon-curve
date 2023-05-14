@@ -1,5 +1,4 @@
 #!/bin/bash
-# Copyright (c) 2021-present Divinia, Inc.
 
 echo "                    __  "
 echo " _   _  __ _ _ __  / _| "
