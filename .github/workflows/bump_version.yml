@@ -62,7 +62,7 @@ jobs:
       - name: "Patch Version"
         if: ${{ (env.PATCH_VERSION_COUNT > 0 || (env.MINOR_VERSION_COUNT == 0 && env.MAJOR_VERSION_COUNT == 0)) && (env.BUMPED == 'FALSE') }}
         run: |
-          bump2version patch
+          bump2version patch --new-version 1.0.2
           echo "BUMPED=TRUE" >> "$GITHUB_ENV"
 
       - name: "Minor Version"
