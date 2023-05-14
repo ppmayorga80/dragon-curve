@@ -83,7 +83,7 @@ jobs:
           echo "BUMPED=TRUE" >> "$GITHUB_ENV"
 
       - name: "Get Version"
-        run: echo "CURRENT_VERSION=$(grep current_version setup.cfg | sed 's/current_version//' | sed 's/=//' | sed 's/ //g')" >> "$GITHUB_ENV"
+        run: echo "CURRENT_VERSION=$(grep current_version .bumpversion.cfg | sed 's/current_version//' | sed 's/=//' | sed 's/ //g')" >> "$GITHUB_ENV"
 
       - name: "Set tag"
         if: env.BUMPED == 'TRUE'
