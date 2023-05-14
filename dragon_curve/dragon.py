@@ -38,9 +38,7 @@ def main():
 
     if rounded:
         if gradient:
-            dragon_curve2_gradient(output=output,
-                                   iterations=iterations,
-                                   line_width=line_width)
+            dragon_curve2_gradient(output=output, iterations=iterations, line_width=line_width)
         else:
             dragon_curve2(output=output,
                           iterations=iterations,
