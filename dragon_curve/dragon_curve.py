@@ -149,11 +149,3 @@ def dragon_curve(output: str, iterations: int, line_length: float, line_color: T
     points = dragon_points(n=iterations, line_length=line_length)
     points, width, height = min_rectangle(points)
     points_to_svg(output, points, width + 2 * line_width, height + 2 * line_width, line_width, line_color)
-
-
-if __name__ == '__main__':
-    dragon_curve("dragon.svg",
-                 iterations=4,
-                 line_length=10.0,
-                 line_color=(1, 0, 1, 1),
-                 line_width=1.0)

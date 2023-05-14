@@ -19,12 +19,14 @@ Options:
 """
 from docopt import docopt
 
-from dragon_curve import dragon_curve
-from dragon_curve2 import dragon_curve2, dragon_curve2_gradient
+from dragon_curve.dragon_curve import dragon_curve
+from dragon_curve.dragon_curve2 import dragon_curve2, dragon_curve2_gradient
 
 
 def main():
     args = docopt(__doc__, version='Dragon Curve 2.0.0 Rounded')
+    print("ARGS:", args)
+
     rounded = args["--rounded"]
     gradient = args["--gradient"]
     line_length = float(args["--line-length"])

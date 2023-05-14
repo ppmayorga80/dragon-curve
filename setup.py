@@ -1,28 +1,24 @@
-from setuptools import find_namespace_packages
-from setuptools import setup
+from setuptools import setup, find_namespace_packages
 
-# Optional dependencies
-extras_require = {'all': []}
-
-# All dependencies
-for key in extras_require:
-    if key != 'all':
-        extras_require['all'] += extras_require[key]
+with open("README.md", "r", encoding="utf-8") as fp:
+    long_description = fp.read()
 
 # Setup script
 setup(
-    name='fractal-logo',
-    version='0.1.0',
+    name='dragon-curve',
+    version='1.0.0',
+    author="Pedro Mayorga, PhD",
+    author_email="ppmayorga80@gmail.com",
     description='Fractal logo',
-    long_description=open('README.md').read(),
+    long_description=long_description,
     long_description_content_type='text/markdown',
+    url="https://github.com/ppmayorga80/dragon-curve",
     packages=find_namespace_packages(exclude=['tests', 'tests.*']),
     install_requires=list(open('requirements.txt')),
     test_suite='tests',
-    extras_require=extras_require,
     entry_points={
         'console_scripts': [
-            'dragon = dragon:main',
+            'dragon = dragon_curve.dragon:main',
         ]
     }
 )
