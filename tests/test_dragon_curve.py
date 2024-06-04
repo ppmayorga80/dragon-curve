@@ -1,6 +1,6 @@
 import os.path
 
-from dragon_curve.dragon_curve import min_rectangle, rotate_points, points_to_svg, dragon_sequence, dragon_points, \
+from src.dragon_curve import min_rectangle, rotate_points, points_to_svg, dragon_sequence, dragon_points, \
     dragon_curve
 
 

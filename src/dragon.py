@@ -19,8 +19,8 @@ Options:
 """
 from docopt import docopt
 
-from dragon_curve.dragon_curve import dragon_curve
-from dragon_curve.dragon_curve2 import dragon_curve2, dragon_curve2_gradient
+from dragon_curve import dragon_curve
+from dragon_curve2 import dragon_curve2, dragon_curve2_gradient
 
 
 def main():
